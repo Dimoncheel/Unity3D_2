@@ -14,6 +14,7 @@ public class CameraControl : MonoBehaviour
     private float charAngleV0;
     private float camSensX=2;
     private float camSensY=2;
+
     void Start()
     {
         character = GameObject.Find("Character");
@@ -35,6 +36,7 @@ public class CameraControl : MonoBehaviour
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
 
+
         camAngleH += mx*camSensX;
         camAngleV -= my*camSensY;
         if (camAngleV > 360)
@@ -45,6 +47,11 @@ public class CameraControl : MonoBehaviour
         {
             camAngleV += 360;
         }
+
+     
+        Camera.main.fieldOfView -= Input.GetAxis("Mouse ScrollWheel")*3.0f;
+        
+       
     }
     private void LateUpdate()
     {
