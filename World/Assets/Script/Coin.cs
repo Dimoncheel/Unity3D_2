@@ -45,6 +45,10 @@ public class Coin : MonoBehaviour
             Pickup();
 
         }
+        else if (other.transform.parent?.name != "Character")
+        {
+
+        }
     }
 
     public void Pickup()

@@ -37,8 +37,8 @@ public class CameraControl : MonoBehaviour
         float my = Input.GetAxis("Mouse Y");
 
 
-        camAngleH += mx*camSensX;
-        camAngleV -= my*camSensY;
+        camAngleH += mx*camSensX*Time.timeScale;
+        camAngleV -= my*camSensY*Time.timeScale*(GameSettings.VerticalInverted?-1:1);
         if (camAngleV > 360)
         {
             camAngleV -= 360;

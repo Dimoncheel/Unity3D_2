@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public float Stamina { get;private set; }
+    private float staminaTime = 5; //5 seconds
+
     private float CharacterSpeed = 2.0f;
     private CharacterController characterController;
     private Animator _animator;
@@ -13,11 +16,13 @@ public class Character : MonoBehaviour
     private bool groundedPlayer;
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
+    private bool _isGrounded;
     // Start is called before the first frame update
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        Stamina = 1;
     }
 
     // Update is called once per frame
@@ -27,7 +32,14 @@ public class Character : MonoBehaviour
         float factor = CharacterSpeed;//*Time.deltaTime
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
+            Stamina -= Time.deltaTime / staminaTime;
+            if(Stamina<0)Stamina = 0;
             factor *= 2;
+        }
+        else
+        {
+            Stamina += Time.deltaTime / staminaTime; ;
+            if (Stamina > 1) Stamina = 1;
         }
         float dx = Input.GetAxis("Horizontal");  // <-, ->, A, D
         float dy = Input.GetAxis("Vertical");
@@ -37,8 +49,9 @@ public class Character : MonoBehaviour
 
         if (moveDirection != Vector3.zero)
         {
-            moveDirection = moveDirection.normalized; 
+            moveDirection = moveDirection.normalized;
         }
+       
         moveDirection *= factor;
 
         MoveState moveState;
@@ -79,7 +92,7 @@ public class Character : MonoBehaviour
 
 
 
-        groundedPlayer = characterController.isGrounded;
+        groundedPlayer = _isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
@@ -102,6 +115,23 @@ public class Character : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         moveDirection.y = playerVelocity.y;
         characterController.Move(moveDirection * Time.deltaTime);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Terrain")
+        {
+            Debug.Log("true "+other.gameObject.name);
+            _isGrounded = true;
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Terrain")
+        {
+            Debug.Log("false " + other.gameObject.name);
+            _isGrounded = false;
+        }
     }
 
     public void Step(int steps)
