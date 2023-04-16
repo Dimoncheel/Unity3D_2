@@ -21,7 +21,7 @@ public class MenuControl : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            ShowMenu( ! menuContent.activeInHierarchy);            
+            ShowMenu(!menuContent.activeInHierarchy);
         }
     }
 
@@ -49,17 +49,17 @@ public class MenuControl : MonoBehaviour
 
         GameObject.Find("GameTimerToggle").GetComponent<Toggle>().isOn = GameSettings.GameTimerEnabled;
 
-        GameObject.Find("DifficultyLevelValue").GetComponent<TMPro.TextMeshProUGUI>().text = 
+        GameObject.Find("DifficultyLevelValue").GetComponent<TMPro.TextMeshProUGUI>().text =
             GameSettings.Difficulty.ToString();
-        GameObject.Find("CoinCostValue").GetComponent<TMPro.TextMeshProUGUI>().text = 
+        GameObject.Find("CoinCostValue").GetComponent<TMPro.TextMeshProUGUI>().text =
             GameSettings.CoinValue.ToString();
 
 
         var board = GameObject.Find("BestBoardText").GetComponent<TMPro.TextMeshProUGUI>();
         board.text = string.Empty;
-        for(int i = 0; i < GameSettings.LeaderRecords.Count; i++)
+        for (int i = 0; i < GameSettings.LeaderRecords.Count; i++)
         {
-            var item=GameSettings.LeaderRecords[i];
+            var item = GameSettings.LeaderRecords[i];
             board.text += $"{i + 1}.{item.Name} -- {item.Score}\n";
         }
     }
@@ -76,7 +76,7 @@ public class MenuControl : MonoBehaviour
             Application.Quit();
             UnityEditor.EditorApplication.isPlaying = false;
         }
-        
+
     }
 
     public void ResetButtonClick()
@@ -105,66 +105,57 @@ public class MenuControl : MonoBehaviour
     public void SensitivityChanged(float value)
     {
         GameSettings.Sensitivity = value;
+
     }
+    public void MusicVolumeChanged(float value)
+    {
+        GameSettings.MusicVolume = value;
+
+    }
+
+    public void MusicEnabledChanged(bool value)
+    {
+        GameSettings.MusicEnabled = value;
+    }
+
+    public void SoundVolumeChanged(float value)
+    {
+        GameSettings.EffectsVolume = value;
+
+    }
+
+    public void SoundEnabledChanged(bool value)
+    {
+        GameSettings.EffectsEnabled = value;
+    }
+    public void AllSoundsEnabledChanged(bool value)
+    {
+        GameSettings.EffectsEnabled = value;
+    }
+
+    public void DisplayCoinDistanceEnabledChanged(bool value)
+    {
+        GameSettings.CoinDistanceEnabled = value;
+    }
+
+    public void DisplayDirectionHintsEnabledChanged(bool value)
+    {
+        GameSettings.DirectionHintsEnabled = value;
+    }
+
+    public void DisplayRespawnTimerEnabledChanged(bool value)
+    {
+        GameSettings.GameTimerEnabled = value;
+    }
+    public void StaminaEnabledChanged(bool value)
+    {
+        GameSettings.StaminaEnabled = value;
+    }
+
     public void GameTimerEnabledChanged(bool value)
     {
         GameSettings.GameTimerEnabled = value;
-        // після зміни якоїсь частини, що визначають складність, слід перерахувати рівень та вартість монети
         ApplySettings();
     }
     #endregion
-    /*
-    void OnGUI()
-    {
-        if (Event.current.isKey && Event.current.type == EventType.KeyDown)
-        {
-            Debug.Log(Event.current.keyCode);
-        }
-    } */
 }
-/* Д.З. Забезпечити адаптивне розміщення блоків ігрового меню (зразок у Teams),
- * їх зміну для екранів з різною роздільною здатністю
- * **почати розміщувати елементи керування
- */
-/* Меню паузи
- * Викликається під час гри, після закриття повертаємось у гру
- * Всі налаштування зберігаються, при наступних запусках залишаються
- * попередньо встановлені налаштування
- * 
- * Налаштування управління
- *  - інвертувати колесо (зум камери)
- *  - чутливість миши до обертання камери 
- *   [окремо по горизонталі та вертикалі]
- *  - інверсія до обертання (тільки по вертикалі)
- *  
- *  Налаштування звуку [+ загальне відключення усіх звуків]
- *   - Фонова музика (гучність + відключення)
- *   - Звукові ефекти (гучність + відключення)
- *   
- *  Рекорди
- *   - Максимально кількість зібраних монет
- *   - Кількість зроблених кроків
- *   - Пропрозиція ввести ім'я для збереження рекорду
- *   
- *  Налаштування відображення
- *   - Показувати ігровий таймер (годинник)
- *   - Показувати відстань до монети
- *   - .. напрям на монету
- *   - .. таймер зникнення монети
- *    [+ відомості про рівень складності з вибраними показниками]
- *    [+ відомості про кількість балів за монету]
- *    [? змінювати висоту спавну (необхідність стрибати)]
- *    
- *  Кнопки
- *   - Закрити (меню)
- *   - Вийти з гри
- *   - Відновити стандартні налаштування
- * ------------------------------------------------------------
- * Д.З.
- * 1. Фон - напівпрозорий рисунок на 100% екрану (адаптивний до будь-якої
- *     роздільної здатності)
- * 2. Контейнер центральної частини, менш прозорий, еластичний пропорційно
- *     до розмірів екрану
- * 3. Заголовок "GAME MENU" з адаптивним розміром у відповідності до екрану
- * 
- */

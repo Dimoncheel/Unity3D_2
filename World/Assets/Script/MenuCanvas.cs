@@ -6,10 +6,13 @@ public class MenuCanvas : MonoBehaviour
 {
     [SerializeField]
     private GameObject menuContent;
+
+    [SerializeField]
+    private GameObject uiContent;
     // Start is called before the first frame update
     void Start()
     {
-        menuContent.SetActive(false);
+        menuContent.SetActive(true);
         
     }
 

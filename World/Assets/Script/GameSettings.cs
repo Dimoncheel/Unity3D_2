@@ -76,6 +76,7 @@ public class GameSettings : MonoBehaviour
             SaveSettings();
         }
     }
+
     public static bool VerticalInverted
     {
         get => _verticalInverted;

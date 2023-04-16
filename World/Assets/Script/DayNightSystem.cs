@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DayNightSystem : MonoBehaviour
 {
-    private const float _FullDayTime = 10f;
+    private const float _FullDayTime = 50f;
     private float _lightingeDeltaAngle = 360f/_FullDayTime;
     [SerializeField]
     private Material daySkybox;
@@ -32,6 +32,9 @@ public class DayNightSystem : MonoBehaviour
 
         sun=GameObject.Find("Sun").GetComponent<Light>();
         moon=GameObject.Find("Moon").GetComponent<Light>();
+
+        daySound.Play();
+        daySound.Play();
 
         RenderSettings.skybox = daySkybox;
     }

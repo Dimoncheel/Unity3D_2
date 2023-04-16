@@ -18,15 +18,18 @@ public class DisplayControl : MonoBehaviour
     GameObject leftHint;
     GameObject rightHint;
     GameObject staminaBar;
+    GameObject coinsLocator;
     private Renderer coinRender;
     void Start()
     {
         coinDistanceText = GameObject.Find("CoinDistanceText").GetComponent<TMPro.TextMeshProUGUI>();
+        
         compasArrowImage = GameObject.Find("CompasArrow").GetComponent<Image>();
         staminaImage = GameObject.Find("StaminaImage").GetComponent<Image>();
         leftHint = GameObject.Find("LeftHint");
         rightHint = GameObject.Find("RightHint");
         staminaBar = GameObject.Find("StaminaBar");
+        coinsLocator = GameObject.Find("CoinsLocator");
       
         coinRender=coin.GetComponentInChildren<Renderer>();
     }
@@ -73,5 +76,7 @@ public class DisplayControl : MonoBehaviour
         }
         compasArrowImage.enabled = GameSettings.DirectionHintsEnabled;
         staminaBar.SetActive(GameSettings.StaminaEnabled);
+        coinsLocator.SetActive(GameSettings.CoinDistanceEnabled);
+        
     }
 }

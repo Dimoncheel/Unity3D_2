@@ -9,10 +9,19 @@ public class Coin : MonoBehaviour
     private float spawnDistanceMin = 10f;
     private float spawnDistanceMax = 20f;
     private float coinSpawnOffsetY;
+    private static int coinCount = 0;
+    private TMPro.TextMeshProUGUI coinCountText;
+
+    public static int CoinCount
+    {
+        get => coinCount;
+        set => coinCount = value;
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
         character = GameObject.Find("Character");
+        coinCountText = GameObject.Find("CoinCount").GetComponent<TMPro.TextMeshProUGUI>();
         float terraHeight = Terrain.activeTerrain.SampleHeight(this.transform.position);
         coinSpawnOffsetY =
             this.transform.position.y
@@ -42,6 +51,8 @@ public class Coin : MonoBehaviour
             animator.SetBool(
               "IsPicked",
               true);
+            CoinCount += 10;
+            coinCountText.SetText(CoinCount.ToString());
             Pickup();
 
         }
